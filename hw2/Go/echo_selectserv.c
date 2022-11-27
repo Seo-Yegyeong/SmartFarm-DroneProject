@@ -63,8 +63,6 @@ int main(int argc, char **argv)
 		if (fd_num == 0)
 			continue;
       
-    printf("\nfd_num == %d\n", fd_num); 
-
 		for (i = 3; i < fd_max + 1; i++)
 		{
 			if (FD_ISSET(i, &cpy_reads))
@@ -77,17 +75,25 @@ int main(int argc, char **argv)
           if(clnt_sock == -1)
             error_handling("accept() error");
           
-          printf("Test : serv_sock == %d, clnt_sock == %d\n", serv_sock, clnt_sock);
-          printf("fd_max == %d\n",fd_max);
 					FD_SET(clnt_sock, &reads);
-					if (fd_max < clnt_sock)
+					if (fd_max < clnt_sock){
 						fd_max = clnt_sock;
-					printf("connected client (i==%d): %d \n\n", i, clnt_sock);
+          }
+          //printf("Test : serv_sock == %d, clnt_sock == %d\n", serv_sock, clnt_sock);
+          //printf("fd_max == %d\n",fd_max);
+          
+          
           flag[clnt_sock] = 1;
+					printf("connected client : %d | i = %d \n\n", clnt_sock, i);
 				}
 				else    // read message!
 				{
+          sleep(1);
+          buf[0] = '\0'; realmsg[0] = '\0';
 					str_len = read(i, buf, BUF_SIZE);
+          buf[str_len] = '\0';
+          printf("buf1: %s.\n", buf);
+          
 					if (str_len == 0)    // close request!
 					{
 						FD_CLR(i, &reads);
@@ -97,39 +103,95 @@ int main(int argc, char **argv)
 					else
 					{
 						//write(i, buf, str_len);    // echo!
-            buf[str_len-1] = '\0';
+            
+            /*
+            첫 번째 접속이냐? 그럼 '입장하였습니다'를 출력하라
+                              (모든 client에게)
+                              그렇지 않으면, 받은 메시지에 이름을 붙여서 출력하라!
+                              (보낸 사람을 제외한 모든 client에게)
+                                            
+            */
+            printf("buf2: %s.\n", buf);
             if(flag[clnt_sock] == 1){
+              flag[clnt_sock] = 0;
               strcpy(nickname[clnt_sock], buf);
-              sprintf(realmsg,"[%s has entered the chatroom!](Q to quit)\n",buf);
+              buf[0] = '\0';
+              nickname[clnt_sock][str_len] = '\0';
+              printf("Nickname! %s..\n", nickname[clnt_sock]);
+              sprintf(realmsg,"[%s has entered the chatroom!](Q to quit)\0",nickname[clnt_sock]);
+              realmsg[strlen(realmsg)-1] = '\0';
+              
+              for(j=4; j<fd_max+1; j++){
+                write(j, realmsg, strlen(realmsg));
+              } 
+              
+              printf("realmsg at connection time: %s.\n", realmsg);
+            }
+            else{
+              printf("TEST buf : %s.", buf);
+              sprintf(realmsg,"[%s] %s", nickname[clnt_sock], buf);
+              
+              realmsg[strlen(realmsg)-1] = '\0';
+              strcat(realmsg, "\0");
+              printf("TEST realmsg : %s.\n", realmsg);
+              buf[0] = '\0';
+              for(j=4; j<fd_max+1; j++){
+                write(j, realmsg, strlen(realmsg));
+              }
+            }
+            printf("%s", realmsg);
+            
+            printf("buf5: %s.\n", buf);
+            
+            
+            /*if(flag[clnt_sock] == 1){
+              strcpy(nickname[clnt_sock], buf);
+              nickname[clnt_sock][str_len] = 0;
+              printf("here! %s\n", nickname[clnt_sock]);
+              sprintf(realmsg,"[%s has entered the chatroom!](Q to quit)\n",nickname[clnt_sock]);
             }
             else{
               sprintf(realmsg,"[%s] %s\n",nickname[clnt_sock], buf);
             }
             
+            flag[clnt_sock] = 0;
             for(j=4; j< fd_max+1 ; j++){
-              if(i!=j)
-                write(j, realmsg, strlen(realmsg));
-            }
-            if(flag[clnt_sock] == 1){
-              write(i, realmsg, strlen(realmsg));
-              for(j=4; j< fd_max+1 ; j++){
+              printf("+j:%d+\n", j);
+              if(flag[clnt_sock]==0 && i+1==j){
+                flag[clnt_sock] = 0;
+                printf("after connetion : flag[clnt_sock] == %d\n", flag[clnt_sock]);
+                continue;
+              }  
+              write(j, realmsg, strlen(realmsg));
+            }*/
+          
+            //if(flag[clnt_sock] == 1){
               
+              //sprintf(realmsg, "%s\n<Chat Member List>\n", realmsg);
+              //for(j=4; j< fd_max+1 ; j++){
+                //if(strcmp(nickname[j], "\0")==0)
+                  //continue;
+                //sprintf(realmsg, "%s|%s\n", realmsg, nickname[j]);
+               // printf("member : %s\n", nickname[j]);
+             // }
+              //sprintf(realmsg, "%s------------------\n", realmsg);
               
-              //sprintf(realmsg, 
-              }
-              flag[clnt_sock] = 0;
-            }
-            printf("\nMessage : %s\n\n",realmsg);
+              //write(clnt_sock, realmsg, strlen(realmsg));
+              //flag[clnt_sock] = 0;
+              //printf("after connetion : flag[clnt_sock] == %d\n", flag[clnt_sock]);
+            //}
+            
+            //printf("realmsg : %s\n\n",realmsg);
 					}
 				}
-        printf("i");
+        //printf("i");
 			}
-      printf("t");
+      //printf("t");
 		}
    
      //sleep 시켰다가 이후에 연결된 clients가 없다면 종료!
 	}
-  printf("%s", buf);
+  printf("buf4: %s.\n", buf);
 	close(serv_sock);
 	return 0;
 }
