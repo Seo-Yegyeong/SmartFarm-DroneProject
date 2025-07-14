@@ -79,3 +79,15 @@
 
 이 시스템은 실내 스마트팜 운영에 있어 드론의 실용성을 극대화하고,  
 **지속적인 감시와 작업 자동화를 통해 농업의 미래 방향성을 제시**합니다.
+
+
+<br />  
+
+## 👥 Collaborators  
+
+| **김석완** | **김형진** | **서예경** | **정지민** |
+|:----------:|:----------:|:----------:|:----------:|
+| ![Kim-Seokwan](https://github.com/wanilly.png) | ![Kim-Hyeongjin](https://github.com/hhjj0506.png) | ![Seo Yegyeong](https://github.com/Seo-Yegyeong.png) | ![Jeong-Jimin](https://github.com/21900679.png) |
+| [@Kim-Seokwan](https://github.com/wanilly) | [@Kim-Hyeongjin](https://github.com/hhjj0506) | [@Seo-Yegyeong](https://github.com/Seo-Yegyeong) | [@Jeong-Jimin](https://github.com/21900679) |
+
+<br />  
