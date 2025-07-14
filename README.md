@@ -30,7 +30,7 @@
 - **AR(Augmented Reality) 마커 기반 위치 인식**
   - 마커는 스마트팜 각 행의 시작/끝에 배치
   - 드론은 카메라로 마커를 인식하여 실시간 위치 계산
-- **Marker Centering**
+- **Marker Centering 알고리즘 개발**
   - 드론으로부터 AR 마커까지의 거리, 인식된 AR 마커의 크기와 xyz축 값 추출
   - 드론이 AR마커를 정면으로 보도록 좌우, 상하, 전후, yaw축을 조정하며 Centering 구현
 - **PD(Proportional-Derivative) 제어**
