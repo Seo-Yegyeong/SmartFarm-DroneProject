@@ -154,7 +154,8 @@
 4. PID 제어로 중심 정렬
 5. 다음 마커로 이동
 6. 마커 미탐지 시 회전 탐색
-7. 루틴 종료 후 착륙 (Landing)
+7. 루틴 종료 후 착륙 (Landing) <br>
+![드론의 비행 루틴 워크플로우](assets/Flight_Routine_Workflow.png)
 
 
 <br><br>
@@ -206,6 +207,18 @@
 - **Python, Drone SDK** 등
 
 <br><br>
+
+## 📸 Demo
+[▶ 영상 보기: OnlyCentering.mp4](./assets/OnlyCentering.mp4) <br>
+<img width="562" height="317" alt="image" src="https://github.com/user-attachments/assets/f889edd3-d83d-4430-ac91-ba9503493ff9" />
+<img width="562" height="317" alt="image" src="https://github.com/user-attachments/assets/2e6bd5bf-d31a-499c-bcc0-72bc61e2b24b" />
+
+
+
+
+<br><br>
+
+비행 테스트 영상 > https://youtu.be/FaRRw3WjRy8
 
 <br />  
 
